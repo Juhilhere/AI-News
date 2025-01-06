@@ -3,7 +3,7 @@ import { config } from "./config.js";
 export class NewsAPI {
   constructor() {
     this.apiKey = config.newsApiKey;
-    this.baseUrl = config.endpoints.news;
+    this.baseUrl = "https://content.guardianapis.com/search";
     this.geminiKey = config.geminiApiKey;
     this.geminiUrl = config.endpoints.gemini;
     this.currentLanguage = "en";
@@ -13,10 +13,10 @@ export class NewsAPI {
     const query = categories.join(" OR ");
     try {
       const response = await fetch(
-        `${this.baseUrl}?q=${query}&apiKey=${this.apiKey}&language=en`
+        `${this.baseUrl}?q=${query}&api-key=${this.apiKey}&show-fields=thumbnail,bodyText`
       );
       const data = await response.json();
-      const articles = await this.processArticles(data.articles);
+      const articles = await this.processArticles(data.response.results);
       return articles;
     } catch (error) {
       console.error("Error fetching news:", error);
@@ -28,24 +28,21 @@ export class NewsAPI {
     const processedArticles = [];
 
     for (const article of articles) {
-      if (
-        !article.title ||
-        !article.description ||
-        article.title === "[Removed]" ||
-        article.description === "[Removed]" ||
-        article.title.trim() === "" ||
-        article.description.trim() === ""
-      ) {
+      if (!article.webTitle || !article.fields?.bodyText) {
         continue;
       }
 
-      // Generate random sentiment
+      // Generate random sentiment (keeping this for compatibility)
       const sentiments = ["positive", "negative", "neutral"];
       const randomSentiment =
         sentiments[Math.floor(Math.random() * sentiments.length)];
 
+      // Format article to match the existing structure
       processedArticles.push({
-        ...article,
+        title: article.webTitle,
+        description: article.fields.bodyText.slice(0, 200) + "...", // Truncate description
+        url: article.webUrl,
+        urlToImage: article.fields.thumbnail || "placeholder.jpg",
         sentiment: randomSentiment,
       });
     }
