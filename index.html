@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI News Aggregator</title>
+    <link rel="preload" as="image" href="/images/mountain-landscape.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Add Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">Juhil's AI News Hub</div>
+        <div class="nav-buttons">
+          <button id="showBookmarks" class="nav-btn">
+            <i class="fas fa-bookmark"></i>
+            Bookmarks
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <aside class="preferences">
+        <h2>News Preferences</h2>
+        <div class="categories">
+          <label><input type="checkbox" value="technology" /> Technology</label>
+          <label><input type="checkbox" value="business" /> Business</label>
+          <label><input type="checkbox" value="science" /> Science</label>
+          <label><input type="checkbox" value="health" /> Health</label>
+        </div>
+        <button id="savePreferences">Save Preferences</button>
+      </aside>
+
+      <section class="news-container">
+        <div class="filters">
+          <div class="filter-group">
+            <select id="sentimentFilter">
+              <option value="all">All Sentiments</option>
+              <option value="positive">Positive</option>
+              <option value="neutral">Neutral</option>
+              <option value="negative">Negative</option>
+            </select>
+            <select id="languageFilter">
+              <option value="en">English</option>
+              <option value="es">Español</option>
+              <option value="fr">Français</option>
+              <option value="de">Deutsch</option>
+              <option value="zh">中文</option>
+            </select>
+          </div>
+        </div>
+        <div id="newsGrid"></div>
+      </section>
+    </main>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
